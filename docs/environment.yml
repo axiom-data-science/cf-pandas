@@ -8,17 +8,19 @@ dependencies:
    # These are needed for the docs themselves
    - numpydoc
    - sphinx
-   - sphinx_rtd_theme
+   - sphinx-markdown-tables
    - ipython
+   - jinja2
    - nbconvert
    - nbformat
    - ipykernel
    - pandoc
    - pip
+   - recommonmark
    - pip:
      - docrep<=0.2.7
-     - nbsphinx
+     - furo
+     - nbsphinx>=0.8.7
      - jupyter_client
-     - sphinx_pangeo_theme
      - sphinx-copybutton
      - sphinxcontrib-srclinks
