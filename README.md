@@ -9,7 +9,7 @@ cf-pandas
 [![Python Package Index](https://img.shields.io/pypi/v/cf-pandas.svg?style=for-the-badge)](https://pypi.org/project/cf-pandas)
 
 
-an accessor for pandas objects that interprets CF attributes
+an accessor for pandas objects that interprets CF attributes. Most if not all of the logic and structure is directly from [cf-xarray](https://github.com/xarray-contrib/cf-xarray).
 
 --------
 
