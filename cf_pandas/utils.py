@@ -53,9 +53,9 @@ def set_up_criteria(criteria: Optional[dict] = None):
     return criteria
 
 
-def select_value(
+def match_criteria_key(
     available_values: list,
-    values_to_match: Union[str, list],
+    keys_to_match: Union[str, list],
     criteria: Optional[dict] = None,
 ) -> list:
     """Use criteria to choose match to key from available available_values.
@@ -64,15 +64,15 @@ def select_value(
     ----------
     available_values: list
         String or list of strings to compare against list of category values. They should be keys in `criteria`.
-    values_to_match : str, list
-        Value(s) to match with available_values.
+    keys_to_match : str, list
+        Key(s) from criteria to match with available_values.
     criteria : dict, optional
         Criteria to use to map from variable to attributes describing the variable. If user has defined custom_criteria, this will be used by default.
 
     Returns
     -------
     list
-        Values from available_values that match values_to_match, according to criteria.
+        Values from available_values that match keys_to_match, according to criteria.
 
     Notes
     -----
@@ -81,9 +81,9 @@ def select_value(
 
     custom_criteria = set_up_criteria(criteria)
 
-    values_to_match = astype(values_to_match, list)
+    keys_to_match = astype(keys_to_match, list)
     results = []
-    for key in values_to_match:
+    for key in keys_to_match:
 
         if custom_criteria is not None and key in custom_criteria:
             # criterion is the attribute type — in this function we don't use it,

@@ -4,7 +4,7 @@ From cf-xarray.
 
 import pandas as pd
 
-from .utils import always_iterable, select_variables
+import cf_pandas as cfp
 
 
 @pd.api.extensions.register_dataframe_accessor("cf")
@@ -35,5 +35,5 @@ class CFAccessor:
         xarray Dataset of the data associated with key
         """
 
-        col_name = select_variables(self._obj.columns.values, key)
+        col_name = cfp.match_criteria_key(self._obj.columns.values, key)
         return self._obj[col_name]
