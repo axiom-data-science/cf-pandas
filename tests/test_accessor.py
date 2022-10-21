@@ -1,11 +1,12 @@
 """Test cf-pandas."""
 
+import pandas as pd
 import pytest
 
 import cf_pandas as cfp
-import pandas as pd
 
-criteria = {    
+
+criteria = {
     "wind_s": {
         "standard_name": "wind_speed$",
     },
@@ -20,22 +21,22 @@ def test_options():
 
 def test_match_criteria_key():
 
-    vals = ['wind_speed', 'WIND_SPEED', 'wind_speed_status']
+    vals = ["wind_speed", "WIND_SPEED", "wind_speed_status"]
 
     # test function with set_options criteria
     with cfp.set_options(custom_criteria=criteria):
-        assert cfp.match_criteria_key(vals, ['wind_s']) == ['wind_speed']
+        assert cfp.match_criteria_key(vals, ["wind_s"]) == ["wind_speed"]
 
     # test function with input criteria
-    assert cfp.match_criteria_key(vals, ['wind_s'], criteria) == ['wind_speed']
+    assert cfp.match_criteria_key(vals, ["wind_s"], criteria) == ["wind_speed"]
 
 
 def test_match_criteria_key_accessor():
 
-    vals = ['wind_speed', 'WIND_SPEED', 'wind_speed_status']
+    vals = ["wind_speed", "WIND_SPEED", "wind_speed_status"]
 
-    df = pd.DataFrame(columns=['temp', 'wind_speed'])
+    df = pd.DataFrame(columns=["temp", "wind_speed"])
 
     # test accessor with set_options criteria
     with cfp.set_options(custom_criteria=criteria):
-        assert df.cf['wind_s'].columns == ['wind_speed']
+        assert df.cf["wind_s"].columns == ["wind_speed"]
