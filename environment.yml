@@ -1,0 +1,10 @@
+name: cf-pandas
+channels:
+  - conda-forge
+dependencies:
+  # Required for full project functionality (don't remove)
+  - pytest
+  # Examples (remove and add as needed)
+  - cf_xarray
+  - pandas
+  - regex
