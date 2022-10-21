@@ -19,7 +19,7 @@ quiet = false
 color = true
 
 [tool.isort]
-known_third_party = ["cf_xarray", "pandas", "pytest", "regex", "setuptools"]
+known_third_party = ["pandas", "pytest", "regex", "setuptools"]
 
 [tool.pytest.ini_options]
 minversion = "6.0"
