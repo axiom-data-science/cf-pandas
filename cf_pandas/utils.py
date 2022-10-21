@@ -2,12 +2,13 @@
 Utilities for cf-pandas.
 """
 
-import pathlib
-
-from typing import Any, Iterable
+from collections import ChainMap
+from typing import Any, Iterable, Optional, Union
 
 import pandas as pd
 import regex
+
+from .options import OPTIONS
 
 
 def always_iterable(obj: Any, allowed=(tuple, list, set, dict)) -> Iterable:
@@ -19,61 +20,89 @@ def astype(value, type_):
     """Return `value` as type `type_`.
     Particularly made to work correctly for returning string, `PosixPath`, or `Timestamp` as list.
     """
-    import pathlib
 
     if not isinstance(value, type_):
+        import pathlib
+
         if type_ == list and isinstance(value, (str, pathlib.PurePath, pd.Timestamp)):
             return [value]
         return type_(value)
     return value
 
 
-def select_variables(variable_strings, criteria, nicknames):
-    """Use variable criteria to choose from available variables.
+def set_up_criteria(criteria: Optional[dict] = None):
+    """Get custom criteria from options.
+
     Parameters
     ----------
-    server: str
-        Information for the reader, as follows:
-        * For an ERDDAP reader, `server` should be the ERDDAP server
-          input as a string. For example, http://erddap.sensors.ioos.us/erddap.
-        * For the axds reader, `server` should just be 'axds'. Note that
-          the variable list is only valid for `axds_type=='platform2'`, not for
-          'layer_group'
-    criteria: dict, str
-        Custom criteria input by user to determine which variables to select.
-    variables: string, list
-        String or list of strings to compare against list of valid
-        variable names. They should be keys in `criteria`.
+    criteria : dict, optional
+        Criteria to use to map from variable to attributes describing the variable. If user has defined custom_criteria, this will be used by default.
+    """
+
+    if criteria is None:
+        if not OPTIONS["custom_criteria"]:
+            return []
+        criteria = OPTIONS["custom_criteria"]
+
+    if criteria is not None:
+        criteria = always_iterable(criteria, allowed=(tuple, list, set))
+
+    criteria = always_iterable(criteria, allowed=(tuple, list, set))
+    criteria = ChainMap(*criteria)
+
+    return criteria
+
+
+def match_criteria_key(
+    available_values: list,
+    keys_to_match: Union[str, list],
+    criteria: Optional[dict] = None,
+) -> list:
+    """Use criteria to choose match to key from available available_values.
+
+    Parameters
+    ----------
+    available_values: list
+        String or list of strings to compare against list of category values. They should be keys in `criteria`.
+    keys_to_match : str, list
+        Key(s) from criteria to match with available_values.
+    criteria : dict, optional
+        Criteria to use to map from variable to attributes describing the variable. If user has defined custom_criteria, this will be used by default.
+
     Returns
     -------
-    Variables from server that match with inputs. UPDATE ALL
+    list
+        Values from available_values that match keys_to_match, according to criteria.
+
     Notes
     -----
     This uses logic from `cf-xarray`.
     """
 
-    nicknames = astype(nicknames, list)
-    results = []
-    for key in nicknames:
+    custom_criteria = set_up_criteria(criteria)
 
-        if criteria is not None and key in criteria:
-            for criterion, patterns in criteria[key].items():
+    keys_to_match = astype(keys_to_match, list)
+    results = []
+    for key in keys_to_match:
+
+        if custom_criteria is not None and key in custom_criteria:
+            # criterion is the attribute type — in this function we don't use it,
+            # instead we use all the patterns available in criteria to match with available_values
+            for criterion, patterns in custom_criteria[key].items():
                 results.extend(
                     list(
                         set(
                             [
-                                var
-                                for var in variable_strings
-                                if regex.match(patterns, var)
+                                value
+                                for value in available_values
+                                if regex.match(patterns, value)
                             ]
                         )
                     )
-                    #                     list(set([var for var in variable_strings if re.match(patterns, var)]))
                 )
 
         # catch scenario that user input valid reader variable names
         else:
-            #             check_variables(server, nicknames)
-            if key in variable_strings:
+            if key in available_values:
                 results.append(key)
     return list(set(results))

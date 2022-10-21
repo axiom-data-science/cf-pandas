@@ -6,7 +6,7 @@ import copy
 
 from typing import Any, MutableMapping
 
-from .utils import always_iterable
+import cf_pandas as cfp
 
 
 OPTIONS: MutableMapping[str, Any] = {
@@ -54,7 +54,7 @@ class set_options:
         options_dict = copy.deepcopy(options_dict)
         for k, v in options_dict.items():
             if k == "custom_criteria":
-                options_dict["custom_criteria"] = always_iterable(
+                options_dict["custom_criteria"] = cfp.always_iterable(
                     options_dict["custom_criteria"], allowed=(tuple, list)
                 )
         OPTIONS.update(options_dict)
