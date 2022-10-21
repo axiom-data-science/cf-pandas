@@ -6,6 +6,7 @@ from pkg_resources import DistributionNotFound, get_distribution
 
 from .accessor import CFAccessor  # noqa
 from .options import set_options  # noqa
+from .utils import astype, select_variables
 
 
 try:

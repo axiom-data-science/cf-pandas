@@ -14,5 +14,3 @@ an accessor for pandas objects that interprets CF attributes. Most if not all of
 --------
 
 <p><small>Project based on the <a target="_blank" href="https://github.com/jbusecke/cookiecutter-science-project">cookiecutter science project template</a>.</small></p>
-
-
