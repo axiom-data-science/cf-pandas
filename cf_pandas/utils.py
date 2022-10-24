@@ -30,27 +30,31 @@ def astype(value, type_):
     return value
 
 
-def set_up_criteria(criteria: Optional[dict] = None):
+def set_up_criteria(criteria: Union[dict, Iterable] = None) -> ChainMap:
     """Get custom criteria from options.
 
     Parameters
     ----------
     criteria : dict, optional
-        Criteria to use to map from variable to attributes describing the variable. If user has defined custom_criteria, this will be used by default.
+        Criteria to use to map from variable to attributes describing the variable. If user has defined
+        custom_criteria, this will be used by default.
+
+    Returns
+    -------
+    ChainMap
+        Criteria
     """
 
     if criteria is None:
         if not OPTIONS["custom_criteria"]:
-            return []
-        criteria = OPTIONS["custom_criteria"]
+            raise KeyError(
+                "criteria needs to be defined either using set_options or directly input."
+            )
+        criteria_it = OPTIONS["custom_criteria"]
+    else:
+        criteria_it = always_iterable(criteria, allowed=(tuple, list, set))
 
-    if criteria is not None:
-        criteria = always_iterable(criteria, allowed=(tuple, list, set))
-
-    criteria = always_iterable(criteria, allowed=(tuple, list, set))
-    criteria = ChainMap(*criteria)
-
-    return criteria
+    return ChainMap(*criteria_it)
 
 
 def match_criteria_key(

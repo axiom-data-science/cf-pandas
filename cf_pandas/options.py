@@ -55,7 +55,7 @@ class set_options:
         for k, v in options_dict.items():
             if k == "custom_criteria":
                 options_dict["custom_criteria"] = cfp.always_iterable(
-                    options_dict["custom_criteria"], allowed=(tuple, list)
+                    options_dict["custom_criteria"], allowed=(tuple, list, set)
                 )
         OPTIONS.update(options_dict)
 

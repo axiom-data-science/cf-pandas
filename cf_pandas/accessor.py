@@ -21,7 +21,7 @@ class CFAccessor:
     #     if "latitude" not in obj.columns or "longitude" not in obj.columns:
     #         raise AttributeError("Must have 'latitude' and 'longitude'.")
 
-    def __getitem__(self, key):
+    def __getitem__(self, key: str):
         """Redefinition of dict-like behavior.
         This enables user to use syntax `reader[dataset_id]` to read in and
         save dataset into the object.
