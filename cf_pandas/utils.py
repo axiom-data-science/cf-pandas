@@ -47,7 +47,7 @@ def set_up_criteria(criteria: Union[dict, Iterable] = None) -> ChainMap:
 
     if criteria is None:
         if not OPTIONS["custom_criteria"]:
-            raise KeyError(
+            raise ValueError(
                 "criteria needs to be defined either using set_options or directly input."
             )
         criteria_it = OPTIONS["custom_criteria"]
