@@ -56,6 +56,11 @@ def test_include_exact():
     matches = ["water_temperature"]
     tm.assert_series_equal(dfmatch, pd.Series(matches), check_index=False)
 
+    reg = cfp.Reg()
+    reg.include_exact("water_temperature")
+    dfmatch2 = df[df.str.match(reg.pattern())]
+    tm.assert_series_equal(dfmatch, dfmatch2, check_index=False)
+
 
 def test_include_exact_two():
     reg = cfp.Reg(include_exact="sea_water_temperature")
@@ -73,9 +78,19 @@ def test_include():
     dfmatch = df[df.str.match(reg.pattern())]
     tm.assert_series_equal(dfmatch, df, check_index=False)
 
+    reg = cfp.Reg()
+    reg.include("temperature")
+    dfmatch2 = df[df.str.match(reg.pattern())]
+    tm.assert_series_equal(dfmatch, dfmatch2, check_index=False)
+
     reg = cfp.Reg(include_or="temperature")
     dfmatch_or = df[df.str.match(reg.pattern())]
     tm.assert_series_equal(dfmatch, dfmatch_or, check_index=False)
+
+    reg = cfp.Reg()
+    reg.include_or("temperature")
+    dfmatch_or2 = df[df.str.match(reg.pattern())]
+    tm.assert_series_equal(dfmatch, dfmatch_or2, check_index=False)
 
 
 def test_include_two():
@@ -101,6 +116,11 @@ def test_include_end():
     dfmatch = df[df.str.match(reg.pattern())]
     matches = ["sea_water_temperature", "water_temperature"]
     tm.assert_series_equal(dfmatch, pd.Series(matches), check_index=False)
+
+    reg = cfp.Reg()
+    reg.include_end("temperature")
+    dfmatch2 = df[df.str.match(reg.pattern())]
+    tm.assert_series_equal(dfmatch, dfmatch2, check_index=False)
 
 
 def test_include_end_two():
@@ -170,6 +190,11 @@ def test_include_start():
     matches = ["temperature_qc"]
     tm.assert_series_equal(dfmatch, pd.Series(matches), check_index=False)
 
+    reg = cfp.Reg()
+    reg.include_start("temperature")
+    dfmatch2 = df[df.str.match(reg.pattern())]
+    tm.assert_series_equal(dfmatch, dfmatch2, check_index=False)
+
 
 def test_include_start_two():
     reg = cfp.Reg(include_start="sea_water_temperature")
@@ -206,6 +231,11 @@ def test_exclude_start():
     dfmatch = df[df.str.match(reg.pattern())]
     matches = ["water_temperature", "temperature_qc"]
     tm.assert_series_equal(dfmatch, pd.Series(matches), check_index=False)
+
+    reg = cfp.Reg()
+    reg.exclude_start("sea")
+    dfmatch2 = df[df.str.match(reg.pattern())]
+    tm.assert_series_equal(dfmatch, dfmatch2, check_index=False)
 
 
 def test_exclude_start_two():
@@ -258,6 +288,11 @@ def test_exclude_end():
     dfmatch = df[df.str.match(reg.pattern())]
     matches = ["sea_water_temperature [celsius]", "temperature_qc"]
     tm.assert_series_equal(dfmatch, pd.Series(matches), check_index=False)
+
+    reg = cfp.Reg()
+    reg.exclude_end("temperature")
+    dfmatch2 = df[df.str.match(reg.pattern())]
+    tm.assert_series_equal(dfmatch, dfmatch2, check_index=False)
 
 
 def test_exclude_end_two():
