@@ -1,6 +1,6 @@
 """Class for writing regular expressions."""
 
-from typing import List, Optional, Union
+from typing import List, Optional, Sequence, Type, Union
 
 from .utils import astype
 
@@ -88,6 +88,13 @@ class Reg(object):
     def exclude(self, string: Union[str, list]):
         """Exclude string from anywhere in matches.
 
+        Parameters
+        ----------
+        string: str, list
+            Matches with regular expression `pattern` will not contain string(s).
+
+        Notes
+        -----
         As a list of strings, this acts as a logical "or" for the exclusions.
         """
 
@@ -98,6 +105,13 @@ class Reg(object):
     def exclude_start(self, string: Union[str, list]):
         """Exclude string from start of matches.
 
+        Parameters
+        ----------
+        string: str, list
+            Matches with regular expression `pattern` will not start with string(s).
+
+        Notes
+        -----
         As a list of strings, this acts as a logical "or" for the exclusions.
         """
 
@@ -108,6 +122,13 @@ class Reg(object):
     def exclude_end(self, string: Union[str, list]):
         """Exclude string from end of matches.
 
+        Parameters
+        ----------
+        string: str, list
+            Matches with regular expression `pattern` will not end with string(s).
+
+        Notes
+        -----
         As a list of strings, this acts as a logical "or" for the exclusions.
         """
 
@@ -116,7 +137,13 @@ class Reg(object):
         self.check()
 
     def include_exact(self, string: str):
-        """String must match exactly."""
+        """String must match exactly.
+
+        Parameters
+        ----------
+        string: str
+            A match with regular expression `pattern` will be exactly string.
+        """
 
         if len(self._include_exact) > 0:
             raise ValueError("`include_exact` already contains a string.")
@@ -125,8 +152,15 @@ class Reg(object):
         self.check()
 
     def include(self, string: Union[str, list]):
-        """String must be present anywhere in matches.
+        """String must be present anywhere in matches, logical "and".
 
+        Parameters
+        ----------
+        string: str, list
+            Matches with regular expression `pattern` will contain all string(s).
+
+        Notes
+        -----
         A list of strings will be treated as a logical "and".
         """
 
@@ -135,8 +169,15 @@ class Reg(object):
         self.check()
 
     def include_or(self, string: Union[str, list]):
-        """String must be present anywhere in matches.
+        """String must be present anywhere in matches, logical "or".
 
+        Parameters
+        ----------
+        string: str, list
+            Matches with regular expression `pattern` will contain at lease one of string(s).
+
+        Notes
+        -----
         A list of strings will be treated as a logical "or".
         """
 
@@ -145,7 +186,13 @@ class Reg(object):
         self.check()
 
     def include_end(self, string: str):
-        """String must be present at the end of matches."""
+        """String must be present at the end of matches.
+
+        Parameters
+        ----------
+        string: str
+            Matches with regular expression `pattern` will end with string.
+        """
 
         if len(self._include_end) > 0:
             raise ValueError("`include_end` already contains a string.")
@@ -154,7 +201,13 @@ class Reg(object):
         self.check()
 
     def include_start(self, string: str):
-        """String must be present at the start of matches."""
+        """String must be present at the start of matches.
+
+        Parameters
+        ----------
+        string: str
+            Matches with regular expression `pattern` will start with string.
+        """
 
         if len(self._include_start) > 0:
             raise ValueError("`include_start` already contains a string.")
@@ -162,8 +215,14 @@ class Reg(object):
             self._include_start = string
         self.check()
 
-    def pattern(self):
-        """Generate regular expression pattern from user rules."""
+    def pattern(self) -> str:
+        """Generate regular expression pattern from user rules.
+
+        Returns
+        -------
+        str
+            Regular expression accounting for all input selections.
+        """
 
         self._pattern = ""
 
@@ -196,3 +255,20 @@ class Reg(object):
             self._pattern = f"{self._include_exact}$"
 
         return self._pattern
+
+
+def joinpat(regs: Sequence[Reg]) -> str:
+    """Join patterns from Reg objects.
+
+    Parameters
+    ----------
+    regs: Sequence
+        Reg objects from which `.pattern()` will be used.
+
+    Returns
+    -------
+    str
+        Regular expression patterns from regs joined together with "|"
+    """
+
+    return "|".join([reg.pattern() for reg in regs])

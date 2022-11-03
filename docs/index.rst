@@ -10,6 +10,7 @@ Welcome to cf-pandas's documentation!
 .. toctree::
    :maxdepth: 2
 
+   demo_reg.md
    api
    GitHub repository <https://github.com/axiom-data-science/cf-pandas>
 
