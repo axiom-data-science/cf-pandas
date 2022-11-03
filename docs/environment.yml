@@ -5,6 +5,7 @@ dependencies:
    - pandas
    - regex
    # These are needed for the docs themselves
+   - jupytext
    - numpydoc
    - sphinx
    - sphinx-markdown-tables
@@ -21,5 +22,6 @@ dependencies:
      - furo
      - nbsphinx>=0.8.7
      - jupyter_client
+     - myst-nb
      - sphinx-copybutton
      - sphinxcontrib-srclinks

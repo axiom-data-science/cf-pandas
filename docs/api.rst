@@ -1,19 +1,34 @@
 :mod:`API`
 ----------------------------
 
-``cf-pandas`` Python API
-=============================
-
 .. toctree::
    :maxdepth: 2
    :hidden:
    :caption: Documentation
 
 
-Top-level API
-*************
+Accessor
+********
 
-.. automodule:: cf_pandas
+.. automodule:: cf_pandas.accessor
+   :members:
+   :inherited-members:
+   :undoc-members:
+   :show-inheritance:
+
+Reg class for writing regular expressions
+*****************************************
+
+.. automodule:: cf_pandas.reg
+   :members:
+   :inherited-members:
+   :undoc-members:
+   :show-inheritance:
+
+``cf-pandas`` utilities
+***********************
+
+.. automodule:: cf_pandas.utils
    :members:
    :inherited-members:
    :undoc-members:
