@@ -27,7 +27,7 @@ Also:
 * `include_start` (string)
 * `include_end` (string)
 
-If you find you want to use more than one `include_exact`, `include_start`, or `include_end` at once, you should write a new regular expression with the class, instead. That is, write multiple expressions and pipe them together with a pipe between, like:
+If you find you want to use more than one `include_exact`, `include_start`, or `include_end` at once, you should write a new regular expression with the class, instead. That is, write multiple expressions and pipe them together with a pipe between, like: 
 
 `"expression1|expression2"`
 
@@ -41,7 +41,6 @@ rather than try to get everything into a single expression, or just use the buil
 ```{code-cell} ipython3
 import cf_pandas as cfp
 import regex
-import lorem
 ```
 
 ## Write a regular expression
