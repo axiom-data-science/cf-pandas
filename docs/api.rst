@@ -16,6 +16,15 @@ Accessor
    :undoc-members:
    :show-inheritance:
 
+``cf-pandas`` utilities
+***********************
+
+.. automodule:: cf_pandas.utils
+   :members:
+   :inherited-members:
+   :undoc-members:
+   :show-inheritance:
+
 Reg class for writing regular expressions
 *****************************************
 
@@ -25,10 +34,10 @@ Reg class for writing regular expressions
    :undoc-members:
    :show-inheritance:
 
-``cf-pandas`` utilities
-***********************
+Vocab class for handling custom variable-selection vocabularies
+***************************************************************
 
-.. automodule:: cf_pandas.utils
+.. automodule:: cf_pandas.vocab
    :members:
    :inherited-members:
    :undoc-members:
