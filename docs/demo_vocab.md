@@ -46,7 +46,7 @@ criteria
 
 You can set your vocabulary to be used generally, or use with a context-manager. I recommend using the context-manager approach whenever you might use more than one vocabulary.
 
-To set it generally for, for example, `cf-xarray`, you would do: 
+To set it generally for, for example, `cf-xarray`, you would do:
 
 ```cf_xarray.set_options(custom_criteria=criteria)```
 
