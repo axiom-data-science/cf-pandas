@@ -9,7 +9,7 @@ from .options import set_options  # noqa
 from .reg import Reg
 from .utils import always_iterable, astype, match_criteria_key
 from .vocab import Vocab
-from .widget import dropdown, Selector
+from .widget import Selector, dropdown
 
 
 try:
