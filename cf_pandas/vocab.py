@@ -19,6 +19,10 @@ class Vocab(object):
         else:
             self.vocab = defaultdict(dict)
 
+    def __repr__(self):
+        """Representation."""
+        return dict(self.vocab).__repr__()
+
     def make_entry(
         self, nickname: str, expressions: Union[str, list], attr: str = "standard_name"
     ):
