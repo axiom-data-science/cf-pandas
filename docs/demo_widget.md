@@ -13,9 +13,9 @@ kernelspec:
 
 # Widget to help humans select strings to match
 
-The best way to understand this demo is with a Binder notebook since it includes a widget!
+The best way to understand this demo is with a Binder notebook since it includes a widget! Click on the badge to launch the Binder notebook.
 
-https://mybinder.org/v2/gh/axiom-data-science/cf-pandas/HEAD?labpath=demo_widget.md
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/axiom-data-science/cf-pandas/HEAD?labpath=demo_widget.ipynb)
 
 ---
 
