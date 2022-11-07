@@ -18,6 +18,7 @@ To install from PyPI:
    :hidden:
    :caption: Documentation
 
+   demo_overview.md
    demo_reg.md
    demo_vocab.md
    demo_widget.md
