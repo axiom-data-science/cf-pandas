@@ -6,9 +6,17 @@
 Welcome to cf-pandas's documentation!
 =====================================
 
+Installation
+------------
+
+To install from PyPI:
+  >>> pip install cf-pandas
+
 
 .. toctree::
    :maxdepth: 2
+   :hidden:
+   :caption: Documentation
 
    demo_reg.md
    demo_vocab.md
