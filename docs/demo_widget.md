@@ -13,13 +13,13 @@ kernelspec:
 
 # Widget to help humans select strings to match
 
-The best way to understand this demo is with a Binder notebook since it includes a widget! 
+The best way to understand this demo is with a Binder notebook since it includes a widget!
 
 https://mybinder.org/v2/gh/axiom-data-science/cf-pandas/HEAD?labpath=demo_widget.md
 
 ---
 
-One way to deal with vocabularies (see [vocab demo](https://cf-pandas.readthedocs.io/en/latest/demo_vocab.html)) is to create a vocabulary that represents exactly which variables you want to match with for a given server. This way, when you are interacting with catalogs and data from that server you can be sure that your vocabulary will pull out the correct variables. It is essentially a variable mapping in this use case as opposed to a variable matching. 
+One way to deal with vocabularies (see [vocab demo](https://cf-pandas.readthedocs.io/en/latest/demo_vocab.html)) is to create a vocabulary that represents exactly which variables you want to match with for a given server. This way, when you are interacting with catalogs and data from that server you can be sure that your vocabulary will pull out the correct variables. It is essentially a variable mapping in this use case as opposed to a variable matching.
 
 Sometimes the variables we want to search through for making selections could be very long. This widget is meant to help quickly include and exclude strings from the list and then allow for human-centered multi-select with command/control to export a vocabulary.
 
