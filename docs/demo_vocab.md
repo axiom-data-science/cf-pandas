@@ -138,3 +138,20 @@ vocab2.make_entry("other_variable_nickname", "match_that_string", attr="standard
 
 vocab1 + vocab2
 ```
+
+## Use the `Reg` class to write regular expressions
+
+We used simple exact matching regular expressions above, but for anything more complicated it can be hard to write regular expressions. You can use the `Reg` class in `cf-pandas` to write regular expressions with several options, as demonstrated more in [another doc page](https://cf-pandas.readthedocs.io/en/latest/demo_reg.html), and briefly here.
+
+```{code-cell} ipython3
+# initialize class
+vocab = cfp.Vocab()
+
+# define a regular expression to represent your variable
+reg = cfp.Reg(include="temperature", exclude="air", exclude_end="_qc", include_start="sea")
+
+# Make an entry to add to your vocabulary
+vocab.make_entry("temp", reg.pattern(), attr="standard_name")
+
+vocab
+```
