@@ -17,5 +17,7 @@ pytest-xdist
 setuptools_scm
 sphinx
 twine
+types-requests
+types-setuptools
 wheel
 zarr

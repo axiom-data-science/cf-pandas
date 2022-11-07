@@ -116,6 +116,7 @@ class Selector(object):
             exclude=self.exclude,
         )
         from IPython.display import display
+
         display(self.button_save)
 
         self.button_save.on_click(self.button_pressed)

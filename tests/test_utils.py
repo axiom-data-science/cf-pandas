@@ -23,6 +23,6 @@ def test_match_criteria_key():
 
 
 def test_standard_names():
-    
+
     names = cfp.standard_names()
     assert "sea_water_temperature" in names
