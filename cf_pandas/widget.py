@@ -23,7 +23,7 @@ def dropdown(
     Parameters
     ----------
     nickname: str
-        nickname to associate with the Vocab class vocabulary entry from this, e.g., "temp"
+        nickname to associate with the Vocab class vocabulary entry from this, e.g., "temp". Inputting this to the function creates a text box for the user to enter it into.
     options: Sequence
         strings to select from in the dropdown widget. Will be filtered by include and exclude inputs.
     include: str
@@ -35,11 +35,11 @@ def dropdown(
     reg = Reg(include=include, exclude=exclude)
     print(reg.pattern())
     options = astype(options, pd.Series)
-    options = options[options.str.match(reg.pattern())]
+    options2 = options[options.str.match(reg.pattern())]
 
     widg = widgets.SelectMultiple(
-        options=options,
-        value=[] if len(options) == 0 else [options[0]],
+        options=options2,
+        value=[] if len(options2) == 0 else [options2.iloc[0]],
         rows=10,
         description="Options",
         disabled=False,
@@ -72,6 +72,8 @@ class Selector(object):
         options: Sequence,
         vocab: Optional[Vocab] = None,
         nickname_in: str = "",
+        include_in: str = "",
+        exclude_in: str = "",
     ):
         """Initialize Selector object.
 
@@ -81,6 +83,12 @@ class Selector(object):
             strings to select from in the dropdown widget. Will be filtered by include and exclude  inputs.
         vocab: Vocab object
             Defaults to None. A vocabulary will be created as part of using this widget. However, instead a vocabulary can be input via this argument and then will be amended with the entries made with the widget.
+        nickname_in: str
+            Default nickname, used for initial value, useful for testing
+        include_in: str
+            Default include, used for initial value, useful for testing
+        exclude_in: str
+            Default exclude, used for initial value, useful for testing
         """
 
         # create an output widget in order to show output instead of going to log
@@ -92,8 +100,8 @@ class Selector(object):
             self.vocab = vocab
 
         self.dropdown_values: Sequence = []
-        self.include = ""
-        self.exclude = ""
+        self.include = include_in
+        self.exclude = exclude_in
 
         self.button_save = widgets.Button(description="Press to save")
 
