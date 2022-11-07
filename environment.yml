@@ -5,7 +5,7 @@ dependencies:
   # Required for full project functionality (don't remove)
   - pytest
   # Examples (remove and add as needed)
-  - BeautifulSoup
+  - bs4
   - ipywidgets
   - jupyterlab_widgets
   - lxml
