@@ -1,5 +1,5 @@
+BeautifulSoup
 ipywidgets
 jupyterlab_widgets
-BeautifulSoup
-requests
 lxml
+requests

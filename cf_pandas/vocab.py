@@ -105,4 +105,6 @@ class Vocab(object):
         openname: str
             Where to find vocab to open.
         """
-        return json.loads(open(pathlib.PurePath(openname).with_suffix(".json"), "r").read())
+        return json.loads(
+            open(pathlib.PurePath(openname).with_suffix(".json"), "r").read()
+        )
