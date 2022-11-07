@@ -2,7 +2,6 @@
 
 from typing import DefaultDict, Dict, Optional, Sequence, Union
 
-import ipywidgets as widgets
 import pandas as pd
 
 from .reg import Reg
@@ -31,9 +30,10 @@ def dropdown(
     exclude: str
         exclude must not be in options values for them to show in the dropdown. Will update as more are input. To input more than one, join separate strings with "|". For example, to exclude both "temperature" and "sea_water", input "temperature|sea_water".
     """
+    import ipywidgets as widgets
 
     reg = Reg(include=include, exclude=exclude)
-    print(reg.pattern())
+    print("Regular expression: ", reg.pattern())
     options = astype(options, pd.Series)
     options2 = options[options.str.match(reg.pattern())]
 
@@ -59,8 +59,7 @@ class Selector(object):
 
     >>> import cf_pandas as cpf
     >>> sel = cfp.Selector(options=["var1", "var2", "var3"])
-    >>> display(sel.button_save)
-    >>> sel.output
+    >>> sel
 
     See resulting vocabulary with:
 
@@ -90,6 +89,7 @@ class Selector(object):
         exclude_in: str
             Default exclude, used for initial value, useful for testing
         """
+        import ipywidgets as widgets
 
         # create an output widget in order to show output instead of going to log
         self.output = widgets.Output()
@@ -115,8 +115,11 @@ class Selector(object):
             include=self.include,
             exclude=self.exclude,
         )
+        from IPython.display import display
+        display(self.button_save)
 
         self.button_save.on_click(self.button_pressed)
+        display(self.output)
 
     def button_pressed(self, *args):
         """Saves a new entry in the catalog when button is pressed."""
@@ -138,4 +141,4 @@ class Selector(object):
             self.vocab.make_entry(
                 self.dropdown.widget.kwargs["nickname"], res, attr="standard_name"
             )
-            print(self.vocab.vocab)
+            print("Vocabulary: ", self.vocab)

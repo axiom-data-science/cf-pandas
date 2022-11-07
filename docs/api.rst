@@ -42,3 +42,12 @@ Vocab class for handling custom variable-selection vocabularies
    :inherited-members:
    :undoc-members:
    :show-inheritance:
+
+widget class for easy human selection of variables to exactly match
+*******************************************************************
+
+.. automodule:: cf_pandas.widget
+   :members:
+   :inherited-members:
+   :undoc-members:
+   :show-inheritance:
