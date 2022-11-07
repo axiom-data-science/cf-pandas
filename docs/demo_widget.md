@@ -15,7 +15,7 @@ kernelspec:
 
 The best way to understand this demo is with a Binder notebook since it includes a widget! Click on the badge to launch the Binder notebook.
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/axiom-data-science/cf-pandas/HEAD?labpath=demo_widget.ipynb)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/axiom-data-science/cf-pandas/HEAD?labpath=docs/demo_widget.ipynb)
 
 ---
 
