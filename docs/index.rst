@@ -12,7 +12,7 @@ Welcome to cf-pandas's documentation!
 
    demo_reg.md
    demo_vocab.md
-   demo_widget.ipynb
+   demo_widget.md
    api
    GitHub repository <https://github.com/axiom-data-science/cf-pandas>
 

@@ -1,0 +1,18 @@
+channels:
+  - conda-forge
+dependencies:
+  # Required for full project functionality (don't remove)
+  - pytest
+  # Examples (remove and add as needed)
+  - bs4
+  - ipywidgets
+  - jupyterlab
+  - jupyterlab_widgets
+  - jupytext
+  - lxml
+  - pandas
+  - pip
+  - regex
+  - requests
+  - pip:
+    - git+https://github.com/axiom-data-science/cf-pandas
