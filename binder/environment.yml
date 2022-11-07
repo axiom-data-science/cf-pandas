@@ -1,4 +1,3 @@
-name: cf-pandas
 channels:
   - conda-forge
 dependencies:
@@ -7,8 +6,13 @@ dependencies:
   # Examples (remove and add as needed)
   - bs4
   - ipywidgets
+  - jupyterlab
   - jupyterlab_widgets
+  - jupytext
   - lxml
   - pandas
+  - pip
   - regex
   - requests
+  - pip:
+    - git+https://github.com/axiom-data-science/cf-pandas

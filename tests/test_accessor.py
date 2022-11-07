@@ -19,18 +19,6 @@ def test_options():
         cfp.set_options(DISPLAY_WIDTH=80)
 
 
-def test_match_criteria_key():
-
-    vals = ["wind_speed", "WIND_SPEED", "wind_speed_status"]
-
-    # test function with set_options criteria
-    with cfp.set_options(custom_criteria=criteria):
-        assert cfp.match_criteria_key(vals, ["wind_s"]) == ["wind_speed"]
-
-    # test function with input criteria
-    assert cfp.match_criteria_key(vals, ["wind_s"], criteria) == ["wind_speed"]
-
-
 def test_match_criteria_key_accessor():
 
     vals = ["wind_speed", "WIND_SPEED", "wind_speed_status"]

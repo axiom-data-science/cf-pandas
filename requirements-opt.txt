@@ -1,0 +1,5 @@
+BeautifulSoup
+ipywidgets
+jupyterlab_widgets
+lxml
+requests
