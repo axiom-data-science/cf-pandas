@@ -110,3 +110,23 @@ def match_criteria_key(
             if key in available_values:
                 results.append(key)
     return list(set(results))
+
+
+def standard_names():
+    """Returns list of CF standard_names.
+
+    Returns
+    -------
+    list
+        All CF standard_names
+    """
+    
+    import requests
+    from bs4 import BeautifulSoup
+    url = "https://cfconventions.org/Data/cf-standard-names/79/src/cf-standard-name-table.xml"
+    req = requests.get(url)
+    soup = BeautifulSoup(req.content, features="xml")#, 'html.parser')
+
+    standard_names = [entry.get("id") for entry in soup.find_all("entry")]
+    
+    return standard_names
