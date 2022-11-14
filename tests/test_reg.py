@@ -374,3 +374,26 @@ def test_exclude_start_end_include_start_end():
     dfmatch = df[df.str.match(reg.pattern())]
     matches = ["sea_water_temperature"]
     tm.assert_series_equal(dfmatch, pd.Series(matches), check_index=False)
+
+
+def test_ignore_case():
+    strings = [
+        "SEA_water_temperature",
+        "sea_water_temperature",
+    ]
+    df = cfp.astype(strings, pd.Series)
+    reg = cfp.Reg(
+        include_start="sea",
+        ignore_case=True,
+    )
+    dfmatch = df[df.str.match(reg.pattern())]
+    matches = ["SEA_water_temperature", "sea_water_temperature"]
+    tm.assert_series_equal(dfmatch, pd.Series(matches), check_index=False)
+
+    reg = cfp.Reg(
+        include_start="sea",
+        ignore_case=False,
+    )
+    dfmatch = df[df.str.match(reg.pattern())]
+    matches = ["sea_water_temperature"]
+    tm.assert_series_equal(dfmatch, pd.Series(matches), check_index=False)

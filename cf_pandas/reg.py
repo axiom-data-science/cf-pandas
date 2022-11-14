@@ -26,6 +26,7 @@ class Reg(object):
         include_exact: Optional[str] = None,
         include_start: Optional[str] = None,
         include_end: Optional[str] = None,
+        ignore_case: bool = True,
     ):
 
         self._exclude = (
@@ -56,6 +57,8 @@ class Reg(object):
         self._include_end = (
             "" if include_end is None or include_end == "" else include_end
         )
+
+        self.ignore_case = ignore_case
 
         self.check()
 
@@ -227,6 +230,9 @@ class Reg(object):
         self._pattern = ""
 
         # the order of these statements is critical to get expressions correct
+        if self.ignore_case:
+            self._pattern += "(?i)"
+
         if len(self._exclude) > 0:  # this should be first
             self._pattern += f"^(?!.*({'|'.join(self._exclude)}))"
 

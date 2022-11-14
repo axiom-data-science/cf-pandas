@@ -26,6 +26,7 @@ Also:
 * `include_exact` (string)
 * `include_start` (string)
 * `include_end` (string)
+* and `ignore_case` (bool)
 
 If you find you want to use more than one `include_exact`, `include_start`, or `include_end` at once, you should write a new regular expression with the class, instead. That is, write multiple expressions and pipe them together with a pipe between, like:
 
