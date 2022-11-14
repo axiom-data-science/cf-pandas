@@ -43,6 +43,7 @@ def dropdown(
         rows=10,
         description="Options",
         disabled=False,
+        layout=widgets.Layout(width="50%"),
     )
     return widg
 
@@ -143,3 +144,8 @@ class Selector(object):
                 self.dropdown.widget.kwargs["nickname"], res, attr="standard_name"
             )
             print("Vocabulary: ", self.vocab)
+
+    # def return_list(self):
+    #     """Return list of variables selected."""
+
+    #     self._variables.append(self.dropdown.widget.result.value)
