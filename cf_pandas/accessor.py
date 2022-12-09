@@ -42,5 +42,5 @@ class CFAccessor:
         xarray Dataset of the data associated with key
         """
 
-        col_name = cfp.match_criteria_key(self._obj.columns.values, key)
+        col_name = cfp.match_criteria_key(self._obj.columns.values, key, split=True)
         return self._obj[col_name]

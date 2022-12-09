@@ -21,10 +21,16 @@ def test_options():
 
 def test_match_criteria_key_accessor():
 
-    vals = ["wind_speed", "WIND_SPEED", "wind_speed_status"]
-
-    df = pd.DataFrame(columns=["temp", "wind_speed"])
+    df = pd.DataFrame(
+        columns=[
+            "temp",
+            "wind_speed",
+            "wind_speed (m/s)",
+            "WIND_SPEED",
+            "wind_speed_status",
+        ]
+    )
 
     # test accessor with set_options criteria
     with cfp.set_options(custom_criteria=criteria):
-        assert df.cf["wind_s"].columns == ["wind_speed"]
+        assert sorted(df.cf["wind_s"].columns) == ["wind_speed", "wind_speed (m/s)"]
