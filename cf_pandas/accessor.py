@@ -7,6 +7,13 @@ import pandas as pd
 import cf_pandas as cfp
 
 
+try:
+    # delete the accessor to avoid warning
+    del pd.DataFrame.cf
+except AttributeError:
+    pass
+
+
 @pd.api.extensions.register_dataframe_accessor("cf")
 class CFAccessor:
     """Dataframe accessor analogous to cf-xarray accessor."""
