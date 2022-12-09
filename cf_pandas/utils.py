@@ -61,6 +61,7 @@ def match_criteria_key(
     available_values: list,
     keys_to_match: Union[str, list],
     criteria: Optional[dict] = None,
+    split: bool = False,
 ) -> list:
     """Use criteria to choose match to key from available available_values.
 
@@ -72,6 +73,8 @@ def match_criteria_key(
         Key(s) from criteria to match with available_values.
     criteria : dict, optional
         Criteria to use to map from variable to attributes describing the variable. If user has defined custom_criteria, this will be used by default.
+    split : bool, optional
+        If split is True, split the available_values by white space before performing matches. This is helpful e.g. when columns headers have the form "standard_name (units)" and you want to match standard_name.
 
     Returns
     -------
@@ -93,17 +96,32 @@ def match_criteria_key(
             # criterion is the attribute type — in this function we don't use it,
             # instead we use all the patterns available in criteria to match with available_values
             for criterion, patterns in custom_criteria[key].items():
-                results.extend(
-                    list(
-                        set(
-                            [
-                                value
-                                for value in available_values
-                                if regex.match(patterns, value)
-                            ]
+                if split:
+                    results.extend(
+                        list(
+                            set(
+                                [
+                                    value
+                                    for value in available_values
+                                    for value_part in value.split()
+                                    if regex.match(patterns, value_part)
+                                ]
+                            )
                         )
                     )
-                )
+
+                else:
+                    results.extend(
+                        list(
+                            set(
+                                [
+                                    value
+                                    for value in available_values
+                                    if regex.match(patterns, value)
+                                ]
+                            )
+                        )
+                    )
 
         # catch scenario that user input valid reader variable names
         else:

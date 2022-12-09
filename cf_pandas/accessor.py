@@ -6,8 +6,9 @@ import pandas as pd
 
 import cf_pandas as cfp
 
+
 try:
-    #delete the accessor to avoid warning 
+    # delete the accessor to avoid warning
     del pd.DataFrame.cf
 except AttributeError:
     pass
