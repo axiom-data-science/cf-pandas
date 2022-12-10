@@ -6,7 +6,7 @@ jupytext:
     format_version: 0.13
     jupytext_version: 1.14.0
 kernelspec:
-  display_name: Python 3 (ipykernel)
+  display_name: Python 3.10.6 ('cf-pandas')
   language: python
   name: python3
 ---
@@ -137,6 +137,19 @@ vocab2.make_entry("new_variable_nickname", ["match_this_string", "match_that_exa
 vocab2.make_entry("other_variable_nickname", "match_that_string", attr="standard_name")
 
 vocab1 + vocab2
+```
+
+Merge 2 or more Vocab objects:
+
+```{code-cell} ipython3
+cfp.merge([vocab1, vocab2])
+```
+
+Can also add in place
+
+```{code-cell} ipython3
+# also works
+vocab1 += vocab2
 ```
 
 ## Use the `Reg` class to write regular expressions
