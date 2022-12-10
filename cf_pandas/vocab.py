@@ -4,7 +4,7 @@ import json
 import pathlib
 
 from collections import defaultdict
-from typing import DefaultDict, Dict, Optional, Union
+from typing import DefaultDict, Dict, Optional, Sequence, Union
 
 from .utils import astype
 
@@ -51,21 +51,36 @@ class Vocab(object):
         expressions = astype(expressions, list)
         entry: DefaultDict[str, Dict[str, str]] = defaultdict(dict)
         entry[nickname][attr] = "|".join(expressions)
-        self.__add__(entry)
+        self.__iadd__(entry)
 
-    def __add__(self, other_vocab: Union[DefaultDict[str, Dict[str, str]], "Vocab"]):
+    def add(
+        self, other_vocab: Union[DefaultDict[str, Dict[str, str]], "Vocab"], method: str
+    ) -> "Vocab":
         """Add two Vocab objects together...
 
         by adding their `.vocab`s together. Expressions are piped together but otherwise not changed.
+        This is used for both `__add__` and `__iadd__`.
 
         Parameters
         ----------
         other_vocab: Vocab
             Other Vocab object to combine with.
+        method : str
+            Whether to run as "add" which returns a new Vocab object or "iadd" which adds to the original object.
+
+        Returns
+        -------
+        Vocab
+            vocab + other_vocab either as a new object or in place.
         """
 
         if isinstance(other_vocab, Vocab):
             other_vocab = other_vocab.vocab
+
+        if method == "add":
+            output = Vocab()
+        elif method == "iadd":
+            output = self
 
         nicknames = set(list(self.vocab.keys()) + list(other_vocab.keys()))
         for nickname in nicknames:
@@ -82,8 +97,22 @@ class Vocab(object):
                     + "|"
                     + other_vocab[nickname].get(attribute, "")
                 ).strip("|")
-                self.vocab[nickname][attribute] = new_expressions
-        return self
+                output.vocab[nickname][attribute] = new_expressions
+        return output
+
+    def __add__(self, other_vocab: Union[DefaultDict[str, Dict[str, str]], "Vocab"]):
+        """vocab1 + vocab2"""
+        return self.add(other_vocab, "add")
+
+    def __iadd__(self, other_vocab: Union[DefaultDict[str, Dict[str, str]], "Vocab"]):
+        """vocab1 += vocab2"""
+        return self.add(other_vocab, "iadd")
+
+    def __radd__(
+        self, other_vocab: Union[DefaultDict[str, Dict[str, str]], "Vocab"]
+    ) -> "Vocab":
+        """right add?"""
+        return self.__add__(other_vocab)
 
     def save(self, savename: Union[str, pathlib.PurePath]):
         """Save to file.
@@ -108,3 +137,23 @@ class Vocab(object):
         return json.loads(
             open(pathlib.PurePath(openname).with_suffix(".json"), "r").read()
         )
+
+
+def merge(vocabs: Sequence[Vocab]) -> Vocab:
+    """Add together multiple Vocab objects.
+
+    Parameters
+    ----------
+    vocabs : Sequence[Vocab]
+        Sequence of Vocab objects to merge.
+
+    Returns
+    -------
+    Vocab
+        Single Vocab object made up of input vocabs.
+    """
+
+    final_vocab = Vocab()
+    for vocab in vocabs:
+        final_vocab += vocab
+    return final_vocab
