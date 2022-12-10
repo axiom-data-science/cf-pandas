@@ -21,27 +21,23 @@ def test_make_entry():
 def test_add_vocabs():
     vocab = cfp.Vocab()
     vocab.vocab = defaultdict(dict,{"temp": {"standard_name": "a|b"}, "salt": {"name": "a|b"}} )
-    # vocab.vocab = {"temp": {"standard_name": "a|b"}, "salt": {"name": "a|b"}}
-    # vocab.make_entry("temp", ["a", "b"], attr="standard_name")
-    # vocab.make_entry("salt", ["a", "b"], attr="name")
     compare = {"temp": {"standard_name": "a|b|a|b"}, "salt": {"name": "a|b|a|b"}}
-    # import pdb; pdb.set_trace()
     assert (vocab + vocab).vocab == compare
 
     vocab2 = cfp.Vocab()
     vocab2.vocab = defaultdict(dict,{"temp": {"name": "a|b"}} )
-    # vocab2.vocab = {"temp": {"name": "a|b"}}
-    # vocab2.make_entry("temp", ["a", "b"], attr="name")
     compare = {
-        "temp": {"name": "a|b", "standard_name": "a|b"},
+        "temp": {"standard_name": "a|b", "name": "a|b"},
         "salt": {"name": "a|b"},
     }
     assert (vocab + vocab2).vocab == compare
+
+    # also merge
+    assert cfp.merge([vocab, vocab2]).vocab == compare
     
     # also iadd
     vocab += vocab2
     assert vocab.vocab == compare
-
 
 
 def test_make_more_entries():

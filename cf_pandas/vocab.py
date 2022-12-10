@@ -51,96 +51,35 @@ class Vocab(object):
         expressions = astype(expressions, list)
         entry: DefaultDict[str, Dict[str, str]] = defaultdict(dict)
         entry[nickname][attr] = "|".join(expressions)
-        # import pdb; pdb.set_trace()
         self.__iadd__(entry)
-
-    # def __add__(self, other_vocab: Union[DefaultDict[str, Dict[str, str]], "Vocab"]) -> "Vocab":
-    #     """Add two Vocab objects together...
-
-    #     by adding their `.vocab`s together. Expressions are piped together but otherwise not changed.
-
-    #     Parameters
-    #     ----------
-    #     other_vocab: Vocab
-    #         Other Vocab object to combine with.
-        
-    #     Returns
-    #     -------
-    #     Vocab
-    #         vocab + other_vocab
-    #     """
-
-    #     if isinstance(other_vocab, Vocab):
-    #         other_vocab = other_vocab.vocab
-        
-    #     new_vocab = Vocab()
-
-    #     nicknames = set(list(self.vocab.keys()) + list(other_vocab.keys()))
-    #     for nickname in nicknames:
-
-    #         # gather all attributes under nickname as a set to compare their expressions
-    #         attributes = set(
-    #             list(self.vocab[nickname].keys()) + list(other_vocab[nickname].keys())
-    #         )
-
-    #         # pipe together expressions for nickname-attribute pairs
-    #         for attribute in attributes:
-    #             new_expressions = (
-    #                 self.vocab[nickname].get(attribute, "")
-    #                 + "|"
-    #                 + other_vocab[nickname].get(attribute, "")
-    #             ).strip("|")
-    #             new_vocab.vocab[nickname][attribute] = new_expressions
-    #             # self.vocab[nickname][attribute] = new_expressions
-    #     return new_vocab
- 
-    # def __iadd__(self, other_vocab: Union[DefaultDict[str, Dict[str, str]], "Vocab"]) -> "Vocab":
-    #     """Add two Vocab objects together...
-
-    #     by adding their `.vocab`s together. Expressions are piped together but otherwise not changed.
-
-    #     Parameters
-    #     ----------
-    #     other_vocab: Vocab
-    #         Other Vocab object to combine with.
-        
-    #     Returns
-    #     -------
-    #     Vocab
-    #         vocab + other_vocab
-    #     """
-
-    #     if isinstance(other_vocab, Vocab):
-    #         other_vocab = other_vocab.vocab
-        
-    #     # new_vocab = Vocab()
-
-    #     nicknames = set(list(self.vocab.keys()) + list(other_vocab.keys()))
-    #     for nickname in nicknames:
-
-    #         # gather all attributes under nickname as a set to compare their expressions
-    #         attributes = set(
-    #             list(self.vocab[nickname].keys()) + list(other_vocab[nickname].keys())
-    #         )
-
-    #         # pipe together expressions for nickname-attribute pairs
-    #         for attribute in attributes:
-    #             new_expressions = (
-    #                 self.vocab[nickname].get(attribute, "")
-    #                 + "|"
-    #                 + other_vocab[nickname].get(attribute, "")
-    #             ).strip("|")
-    #             # new_vocab.vocab[nickname][attribute] = new_expressions
-    #             self.vocab[nickname][attribute] = new_expressions
-    #     return self
     
     def add(self, other_vocab: Union[DefaultDict[str, Dict[str, str]], "Vocab"],
-            final_vocab) -> "Vocab":
+            method: str) -> "Vocab":
+        """Add two Vocab objects together...
+
+        by adding their `.vocab`s together. Expressions are piped together but otherwise not changed.
+        This is used for both `__add__` and `__iadd__`.
+
+        Parameters
+        ----------
+        other_vocab: Vocab
+            Other Vocab object to combine with.
+        method : str
+            Whether to run as "add" which returns a new Vocab object or "iadd" which adds to the original object.
+        
+        Returns
+        -------
+        Vocab
+            vocab + other_vocab either as a new object or in place.
+        """
 
         if isinstance(other_vocab, Vocab):
             other_vocab = other_vocab.vocab
         
-        # new_vocab = Vocab()
+        if method == "add":
+            output = Vocab()
+        elif method == "iadd":
+            output = self
 
         nicknames = set(list(self.vocab.keys()) + list(other_vocab.keys()))
         for nickname in nicknames:
@@ -157,34 +96,20 @@ class Vocab(object):
                     + "|"
                     + other_vocab[nickname].get(attribute, "")
                 ).strip("|")
-                # new_vocab.vocab[nickname][attribute] = new_expressions
-                final_vocab.vocab[nickname][attribute] = new_expressions
-        return final_vocab
+                output.vocab[nickname][attribute] = new_expressions
+        return output
     
     def __add__(self, other_vocab: Union[DefaultDict[str, Dict[str, str]], "Vocab"]):
-        return self.add(other_vocab, Vocab())
+        """vocab1 + vocab2"""
+        return self.add(other_vocab, "add")
     
     def __iadd__(self, other_vocab: Union[DefaultDict[str, Dict[str, str]], "Vocab"]):
-        return self.add(other_vocab, self)
+        """vocab1 += vocab2"""
+        return self.add(other_vocab, "iadd")
    
     def __radd__(self, other_vocab: Union[DefaultDict[str, Dict[str, str]], "Vocab"]) -> "Vocab":
+        """right add?"""
         return self.__add__(other_vocab)
-
-    # def __iadd__(self, other_vocab: Union[DefaultDict[str, Dict[str, str]], "Vocab"]) -> "Vocab":
-    #     """Allows for vocab1 += vocab2
-
-    #     Parameters
-    #     ----------
-    #     other_vocab: Vocab
-    #         Other Vocab object to combine with.
-
-    #     Returns
-    #     -------
-    #     Vocab
-    #         vocab plus other_vocab
-    #     """
-    #     self = self.__add__(other_vocab)
-    #     return self
 
     def save(self, savename: Union[str, pathlib.PurePath]):
         """Save to file.
@@ -212,9 +137,21 @@ class Vocab(object):
         
 
 def merge(vocabs: Sequence[Vocab]) -> Vocab:
+    """Add together multiple Vocab objects.
+
+    Parameters
+    ----------
+    vocabs : Sequence[Vocab]
+        Sequence of Vocab objects to merge.
+
+    Returns
+    -------
+    Vocab
+        Single Vocab object made up of input vocabs.
+    """
     
-    final_vocab = vocabs[0]
-    for vocab in vocabs[1:]:
+    final_vocab = Vocab()
+    for vocab in vocabs:
         final_vocab += vocab
     return final_vocab
     
