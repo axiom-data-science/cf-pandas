@@ -20,12 +20,14 @@ def test_make_entry():
 
 def test_add_vocabs():
     vocab = cfp.Vocab()
-    vocab.vocab = defaultdict(dict,{"temp": {"standard_name": "a|b"}, "salt": {"name": "a|b"}} )
+    vocab.vocab = defaultdict(
+        dict, {"temp": {"standard_name": "a|b"}, "salt": {"name": "a|b"}}
+    )
     compare = {"temp": {"standard_name": "a|b|a|b"}, "salt": {"name": "a|b|a|b"}}
     assert (vocab + vocab).vocab == compare
 
     vocab2 = cfp.Vocab()
-    vocab2.vocab = defaultdict(dict,{"temp": {"name": "a|b"}} )
+    vocab2.vocab = defaultdict(dict, {"temp": {"name": "a|b"}})
     compare = {
         "temp": {"standard_name": "a|b", "name": "a|b"},
         "salt": {"name": "a|b"},
@@ -34,7 +36,7 @@ def test_add_vocabs():
 
     # also merge
     assert cfp.merge([vocab, vocab2]).vocab == compare
-    
+
     # also iadd
     vocab += vocab2
     assert vocab.vocab == compare

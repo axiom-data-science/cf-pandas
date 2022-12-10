@@ -8,7 +8,7 @@ from .accessor import CFAccessor  # noqa
 from .options import set_options  # noqa
 from .reg import Reg
 from .utils import always_iterable, astype, match_criteria_key, standard_names
-from .vocab import merge, Vocab
+from .vocab import Vocab, merge
 from .widget import Selector, dropdown
 
 

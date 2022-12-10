@@ -52,9 +52,10 @@ class Vocab(object):
         entry: DefaultDict[str, Dict[str, str]] = defaultdict(dict)
         entry[nickname][attr] = "|".join(expressions)
         self.__iadd__(entry)
-    
-    def add(self, other_vocab: Union[DefaultDict[str, Dict[str, str]], "Vocab"],
-            method: str) -> "Vocab":
+
+    def add(
+        self, other_vocab: Union[DefaultDict[str, Dict[str, str]], "Vocab"], method: str
+    ) -> "Vocab":
         """Add two Vocab objects together...
 
         by adding their `.vocab`s together. Expressions are piped together but otherwise not changed.
@@ -66,7 +67,7 @@ class Vocab(object):
             Other Vocab object to combine with.
         method : str
             Whether to run as "add" which returns a new Vocab object or "iadd" which adds to the original object.
-        
+
         Returns
         -------
         Vocab
@@ -75,7 +76,7 @@ class Vocab(object):
 
         if isinstance(other_vocab, Vocab):
             other_vocab = other_vocab.vocab
-        
+
         if method == "add":
             output = Vocab()
         elif method == "iadd":
@@ -98,16 +99,18 @@ class Vocab(object):
                 ).strip("|")
                 output.vocab[nickname][attribute] = new_expressions
         return output
-    
+
     def __add__(self, other_vocab: Union[DefaultDict[str, Dict[str, str]], "Vocab"]):
         """vocab1 + vocab2"""
         return self.add(other_vocab, "add")
-    
+
     def __iadd__(self, other_vocab: Union[DefaultDict[str, Dict[str, str]], "Vocab"]):
         """vocab1 += vocab2"""
         return self.add(other_vocab, "iadd")
-   
-    def __radd__(self, other_vocab: Union[DefaultDict[str, Dict[str, str]], "Vocab"]) -> "Vocab":
+
+    def __radd__(
+        self, other_vocab: Union[DefaultDict[str, Dict[str, str]], "Vocab"]
+    ) -> "Vocab":
         """right add?"""
         return self.__add__(other_vocab)
 
@@ -134,7 +137,7 @@ class Vocab(object):
         return json.loads(
             open(pathlib.PurePath(openname).with_suffix(".json"), "r").read()
         )
-        
+
 
 def merge(vocabs: Sequence[Vocab]) -> Vocab:
     """Add together multiple Vocab objects.
@@ -149,9 +152,8 @@ def merge(vocabs: Sequence[Vocab]) -> Vocab:
     Vocab
         Single Vocab object made up of input vocabs.
     """
-    
+
     final_vocab = Vocab()
     for vocab in vocabs:
         final_vocab += vocab
     return final_vocab
-    
