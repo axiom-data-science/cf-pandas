@@ -11,7 +11,6 @@ from .utils import always_iterable, astype, match_criteria_key, standard_names
 from .vocab import Vocab, merge
 from .widget import Selector, dropdown
 
-
 try:
     __version__ = get_distribution("cf-pandas").version
 except DistributionNotFound:

@@ -20,7 +20,6 @@ import sys
 # see https://pypi.org/project/setuptools-scm/ for details
 from pkg_resources import get_distribution
 
-
 print("python exec:", sys.executable)
 print("sys.path:", sys.path)
 root = pathlib.Path(__file__).parent.parent.absolute()

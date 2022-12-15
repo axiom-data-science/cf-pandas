@@ -3,11 +3,9 @@ Copying options from cf-xarray options.py
 """
 
 import copy
-
 from typing import Any, MutableMapping
 
 import cf_pandas as cfp
-
 
 OPTIONS: MutableMapping[str, Any] = {
     "custom_criteria": [],

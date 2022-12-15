@@ -5,9 +5,7 @@ Copyright (c) 2017 MetPy Developers.
 """
 
 import re
-
 from typing import Mapping, MutableMapping, Tuple
-
 
 coordinate_criteria: MutableMapping[str, MutableMapping[str, Tuple]] = {
     "latitude": {

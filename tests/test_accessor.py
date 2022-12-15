@@ -9,7 +9,6 @@ import requests
 
 import cf_pandas as cfp
 
-
 criteria = {
     "wind_s": {
         "standard_name": "wind_speed$",

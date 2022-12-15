@@ -2,7 +2,6 @@
 
 import json
 import pathlib
-
 from collections import defaultdict
 from typing import DefaultDict, Dict, Optional, Sequence, Union
 

@@ -3,7 +3,6 @@ From cf-xarray.
 """
 
 import itertools
-
 from typing import (
     Any,
     Callable,
@@ -22,7 +21,6 @@ from typing import (
 )
 
 import pandas as pd
-
 from pandas import DataFrame, Series
 
 import cf_pandas as cfp
@@ -31,7 +29,6 @@ from .criteria import coordinate_criteria
 from .options import OPTIONS
 from .utils import always_iterable, match_criteria_key, set_up_criteria
 from .vocab import Vocab
-
 
 #:  `axis` names understood by cf_xarray
 _AXIS_NAMES = ("X", "Y", "Z", "T")
