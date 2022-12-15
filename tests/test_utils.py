@@ -1,7 +1,10 @@
 """Test cf-pandas utils."""
 
-import cf_pandas as cfp
+from unittest import mock
 
+import requests
+
+import cf_pandas as cfp
 
 criteria = {
     "wind_s": {
@@ -38,7 +41,11 @@ def test_match_criteria_key_split():
     ]
 
 
-def test_standard_names():
+@mock.patch("requests.get")
+def test_standard_names(mock_requests):
 
+    resp = requests.models.Response
+    resp.content = b"""<?xml version="1.0"?>\n<standard_name_table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="cf-standard-name-table-1.1.xsd">\n   <version_number>79</version_number>\n   <last_modified>2022-03-19T15:25:54Z</last_modified>\n   <institution>Centre for Environmental Data Analysis</institution>\n   <contact>support@ceda.ac.uk</contact>\n\n  \n   <entry id="longitude">\n      </entry>\n  \n   <entry id="wind_speed">\n  """
+    mock_requests.return_value = resp
     names = cfp.standard_names()
-    assert "sea_water_temperature" in names
+    assert "wind_speed" in names

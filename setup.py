@@ -1,6 +1,5 @@
 from setuptools import setup
 
-
 setup(
     use_scm_version={
         "write_to": "cf_pandas/_version.py",

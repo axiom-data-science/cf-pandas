@@ -2,7 +2,6 @@
 
 import json
 import pathlib
-
 from collections import defaultdict
 from typing import DefaultDict, Dict, Optional, Sequence, Union
 
@@ -52,6 +51,8 @@ class Vocab(object):
         entry: DefaultDict[str, Dict[str, str]] = defaultdict(dict)
         entry[nickname][attr] = "|".join(expressions)
         self.__iadd__(entry)
+
+        return self
 
     def add(
         self, other_vocab: Union[DefaultDict[str, Dict[str, str]], "Vocab"], method: str

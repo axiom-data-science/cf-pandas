@@ -1,7 +1,6 @@
 """Test vocab"""
 
 import os
-
 from collections import defaultdict
 
 import cf_pandas as cfp

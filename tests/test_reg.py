@@ -2,11 +2,9 @@
 
 import pandas as pd
 import pytest
-
 from pandas import testing as tm
 
 import cf_pandas as cfp
-
 
 strings = [
     "sea_water_temperature",
