@@ -53,6 +53,8 @@ class Vocab(object):
         entry[nickname][attr] = "|".join(expressions)
         self.__iadd__(entry)
 
+        return self
+
     def add(
         self, other_vocab: Union[DefaultDict[str, Dict[str, str]], "Vocab"], method: str
     ) -> "Vocab":

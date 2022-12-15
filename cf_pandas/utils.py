@@ -54,6 +54,9 @@ def set_up_criteria(criteria: Union[dict, Iterable] = None) -> ChainMap:
     else:
         criteria_it = always_iterable(criteria, allowed=(tuple, list, set))
 
+    # # Add in coordinate_criteria to be able to identify coordinates too
+    # criteria_it[0].update(coordinate_criteria)
+
     return ChainMap(*criteria_it)
 
 
