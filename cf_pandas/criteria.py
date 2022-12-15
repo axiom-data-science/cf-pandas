@@ -4,8 +4,10 @@ Reused with modification from cf-xarray which modified from MetPy under the term
 Copyright (c) 2017 MetPy Developers.
 """
 
-from typing import Mapping, MutableMapping, Tuple
 import re
+
+from typing import Mapping, MutableMapping, Tuple
+
 
 coordinate_criteria: MutableMapping[str, MutableMapping[str, Tuple]] = {
     "latitude": {
