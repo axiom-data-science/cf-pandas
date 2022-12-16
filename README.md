@@ -1,7 +1,7 @@
 cf-pandas
 ==============================
-[![Build Status](https://img.shields.io/static/v1.svg?logo=Jupyter&label=Binder&message=Binder&color=blue&style=for-the-badge)](https://mybinder.org/v2/gh/axiom-data-science/cf-pandas/HEAD?labpath=docs%2Fdemo_overview.ipynb)
-[![Build Status](https://img.shields.io/github/workflow/status/axiom-data-science/cf-pandas/Tests?logo=github&style=for-the-badge)](https://github.com/axiom-data-science/cf-pandas/actions)
+[![Binder](https://img.shields.io/static/v1.svg?logo=Jupyter&label=Binder&message=Binder&color=blue&style=for-the-badge)](https://mybinder.org/v2/gh/axiom-data-science/cf-pandas/HEAD?labpath=docs%2Fdemo_overview.ipynb)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/axiom-data-science/cf-pandas/workflows/test.yaml?branch=main?logo=github&style=for-the-badge)](https://github.com/axiom-data-science/cf-pandas/actions)
 [![Code Coverage](https://img.shields.io/codecov/c/github/axiom-data-science/cf-pandas.svg?style=for-the-badge)](https://codecov.io/gh/axiom-data-science/cf-pandas)
 [![License:MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![Documentation Status](https://img.shields.io/readthedocs/cf-pandas/latest.svg?style=for-the-badge)](https://cf-pandas.readthedocs.io/en/latest/?badge=latest)
