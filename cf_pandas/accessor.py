@@ -161,7 +161,11 @@ class CFAccessor:
 
         varnames = list(self.axes) + list(self.coordinates)
         try:
-            varnames.extend(list(self.custom_keys))
+            # see which custom keys have matched values in object
+            matched_keys = [
+                key for key, val in self.custom_keys.items() if len(val) > 0
+            ]
+            varnames.extend(matched_keys)
         except ValueError:
             # don't have criteria defined, then no custom keys to report
             pass

@@ -16,6 +16,7 @@ criteria = {
     "temp2": {
         "standard_name": "temp$",
     },
+    "salt2": {"standard_name": "sal$"},
 }
 
 
@@ -73,6 +74,7 @@ def test_match_criteria_key_accessor():
         ]
         assert "X" in df.cf
         assert "Y" not in df.cf
+        assert "salt2" not in df.cf
 
 
 @mock.patch("requests.get")
