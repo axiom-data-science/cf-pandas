@@ -3,6 +3,7 @@ From cf-xarray.
 """
 
 import itertools
+from collections import ChainMap
 from typing import (
     Any,
     Callable,
@@ -25,9 +26,14 @@ from pandas import DataFrame, Series
 
 import cf_pandas as cfp
 
-from .criteria import coordinate_criteria
+from .criteria import coordinate_criteria, guess_regex
 from .options import OPTIONS
-from .utils import always_iterable, match_criteria_key, set_up_criteria
+from .utils import (
+    _is_datetime_like,
+    always_iterable,
+    match_criteria_key,
+    set_up_criteria,
+)
 from .vocab import Vocab
 
 #:  `axis` names understood by cf_xarray
@@ -195,7 +201,6 @@ class CFAccessor:
         """
         # vardict = {key: self.__getitem__(key) for key in _AXIS_NAMES}
         vardict = {key: _get_all(self._obj, key) for key in _AXIS_NAMES}
-
         return {k: sorted(v) for k, v in vardict.items() if v}
 
     @property
@@ -275,16 +280,20 @@ class CFAccessor:
 
 def _get_axis_coord(obj: Union[DataFrame, Series], key: str) -> list:
     """
-    Translate from axis or coord name to variable name
+    Translate from axis or coord name to variable name. After matching based on coordinate_criteria,
+    if there are no matches for key, then guess_regex is used to search for matches.
+
     Parameters
     ----------
     obj : DataArray, Dataset
         DataArray belonging to the coordinate to be checked
     key : str, ["X", "Y", "Z", "T", "longitude", "latitude", "vertical", "time"]
         key to check for.
+
     Returns
     -------
     List[str], Variable name(s) in parent xarray object that matches axis or coordinate `key`
+
     Notes
     -----
     This functions checks for the following attributes in order
@@ -292,6 +301,7 @@ def _get_axis_coord(obj: Union[DataFrame, Series], key: str) -> list:
     - `_CoordinateAxisType` (from THREDDS)
     - `axis` (CF option)
     - `positive` (CF standard for non-pressure vertical coordinate)
+
     References
     ----------
     MetPy's parse_cf
@@ -340,6 +350,18 @@ def _get_axis_coord(obj: Union[DataFrame, Series], key: str) -> list:
                     #     units = getattr(col.data, "units", None)
                     #     if units in expected:
                     #         results.update((col,))
+
+        # also use the guess_regex approach by default, but only if no results so far
+        # this takes the logic from cf-xarray guess_coord_axis
+        if len(results) == 0:
+            if obj[col].ndim == 1 and _is_datetime_like(obj[col]):
+                results.update((col,))
+                continue  # prevent second detection
+
+            pattern = guess_regex[key]
+            if pattern.match(col.lower()):
+                results.update((col,))
+
     return list(results)
 
 

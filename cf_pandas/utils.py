@@ -5,8 +5,10 @@ Utilities for cf-pandas.
 from collections import ChainMap
 from typing import Any, Iterable, Optional, Union
 
+import numpy as np
 import pandas as pd
 import regex
+from pandas import Series
 
 from .options import OPTIONS
 
@@ -152,3 +154,12 @@ def standard_names():
     standard_names = [entry.get("id") for entry in soup.find_all("entry")]
 
     return standard_names
+
+
+def _is_datetime_like(da: Series) -> bool:
+    if np.issubdtype(da.dtype, np.datetime64) or np.issubdtype(
+        da.dtype, np.timedelta64
+    ):
+        return True
+
+    return False

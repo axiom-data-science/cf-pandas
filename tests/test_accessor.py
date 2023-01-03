@@ -121,3 +121,10 @@ def test_set_item():
         assert all(df.cf["temp"].values == np.arange(8))
         df.cf["longitude"] = np.arange(8)
         assert all(df.cf["longitude"].values == np.arange(8))
+
+
+def test_get_by_guess_regex():
+    df = pd.DataFrame(columns=["lon", "lat", "min"])
+    assert df.cf["longitude"].name == "lon"
+    assert df.cf["latitude"].name == "lat"
+    assert df.cf["time"].name == "min"
