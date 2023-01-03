@@ -2,6 +2,7 @@
 
 from unittest import mock
 
+import pandas as pd
 import requests
 
 import cf_pandas as cfp
@@ -49,3 +50,14 @@ def test_standard_names(mock_requests):
     mock_requests.return_value = resp
     names = cfp.standard_names()
     assert "wind_speed" in names
+
+
+def test__is_datetime_like():
+    df = pd.DataFrame()
+    df["time"] = pd.date_range(start="2001-1-1", end="2001-1-5", freq="1D")
+    assert cfp.utils._is_datetime_like(df["time"])
+
+    df = pd.DataFrame()
+    df["time"] = ["2001-1-1", "2001-1-2", "2001-1-3"]
+    assert not cfp.utils._is_datetime_like(df["time"])
+    assert cfp.utils._is_datetime_like(pd.to_datetime(df["time"]))
