@@ -18,7 +18,7 @@ import sys
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 # see https://pypi.org/project/setuptools-scm/ for details
-from pkg_resources import get_distribution
+from importlib.metadata import version as imversion
 
 print("python exec:", sys.executable)
 print("sys.path:", sys.path)
@@ -31,10 +31,10 @@ import cf_pandas  # isort:skip
 # -- Project information -----------------------------------------------------
 
 project = "cf-pandas"
-copyright = "2022, Axiom Data Science"
+copyright = "2022–2023, Axiom Data Science"
 author = "Axiom Data Science"
 
-release = get_distribution("cf_pandas").version
+release = imversion("cf-pandas")
 # for example take major/minor
 version = ".".join(release.split(".")[:2])
 

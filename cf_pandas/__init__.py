@@ -2,7 +2,7 @@
 cf-pandas: an accessor for pandas objects that interprets CF attributes
 """
 
-from pkg_resources import DistributionNotFound, get_distribution
+from importlib.metadata import PackageNotFoundError, version
 
 from .accessor import CFAccessor  # noqa
 from .options import set_options  # noqa
@@ -12,7 +12,7 @@ from .vocab import Vocab, merge
 from .widget import Selector, dropdown
 
 try:
-    __version__ = get_distribution("cf-pandas").version
-except DistributionNotFound:
+    __version__ = version("cf-pandas")
+except PackageNotFoundError:
     # package is not installed
-    __version__ = "unknown"
+    pass
