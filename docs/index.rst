@@ -9,7 +9,12 @@ Welcome to cf-pandas's documentation!
 Installation
 ------------
 
+To install from conda-forge:
+
+  >>> conda install -c conda-forge cf_pandas
+
 To install from PyPI:
+
   >>> pip install cf-pandas
 
 
@@ -27,11 +32,11 @@ To install from PyPI:
 
 
 
-Indices and tables
-==================
+.. Indices and tables
+.. ==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. * :ref:`genindex`
+.. * :ref:`modindex`
+.. * :ref:`search`
 
-.. _reStructuredText: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
+.. .. _reStructuredText: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
