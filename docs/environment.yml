@@ -22,6 +22,7 @@ dependencies:
    - pip
    - recommonmark
    - pip:
+     - cf_pandas
      - docrep<=0.2.7
      - furo
      - nbsphinx>=0.8.7
