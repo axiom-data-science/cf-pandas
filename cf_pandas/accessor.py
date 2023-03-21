@@ -354,7 +354,7 @@ def _get_axis_coord(obj: Union[DataFrame, Series], key: str) -> list:
         # also use the guess_regex approach by default, but only if no results so far
         # this takes the logic from cf-xarray guess_coord_axis
         if len(results) == 0:
-            if obj[col].ndim == 1 and _is_datetime_like(obj[col]):
+            if key in ("T", "time") and _is_datetime_like(obj[col]):
                 results.update((col,))
                 continue  # prevent second detection
 
