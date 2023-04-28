@@ -69,7 +69,9 @@ class CFAccessor:
         # verify that necessary keys are present. Z would also be nice but might be missing.
         # but don't use the accessor to check
         keys = ["T", "longitude", "latitude"]
-        missing_keys = [key for key in keys if len(_get_axis_coord(self._obj, key)) == 0]
+        missing_keys = [
+            key for key in keys if len(_get_axis_coord(self._obj, key)) == 0
+        ]
         if len(missing_keys) > 0:
             raise AttributeError(
                 f'{"longitude", "latitude", "time"} must be identifiable in DataFrame but {missing_keys} are missing.'
@@ -368,14 +370,19 @@ def _get_axis_coord(obj: Union[DataFrame, Series], key: str) -> list:
                     #     units = getattr(col.data, "units", None)
                     #     if units in expected:
                     #         results.update((col,))
-
         # also use the guess_regex approach by default, but only if no results so far
         # this takes the logic from cf-xarray guess_coord_axis
         if len(results) == 0:
-            if key in ("T", "time") and _is_datetime_like(obj[col]):
-                results.update((col,))
-                continue  # prevent second detection
-
+            if col in obj.columns:
+                if key in ("T", "time") and _is_datetime_like(obj[col]):
+                    results.update((col,))
+                    continue  # prevent second detection
+            elif col in obj.index.names:
+                if key in ("T", "time") and _is_datetime_like(
+                    obj.index.get_level_values(col)
+                ):
+                    results.update((col,))
+                    continue  # prevent second detection
             pattern = guess_regex[key]
             if pattern.match(col.lower()):
                 results.update((col,))
