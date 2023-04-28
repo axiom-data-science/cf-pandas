@@ -33,7 +33,7 @@ def test_validate():
         ]
     )
     with pytest.raises(AttributeError):
-        df.cf.keys()
+        df.cf._validate()
 
 
 def test_match_criteria_key_accessor():
@@ -128,3 +128,20 @@ def test_get_by_guess_regex():
     assert df.cf["longitude"].name == "lon"
     assert df.cf["latitude"].name == "lat"
     assert df.cf["time"].name == "min"
+
+    df = pd.DataFrame(columns=["blah_lon", "table_lat"])
+    assert df.cf["longitude"].name == "blah_lon"
+    assert df.cf["latitude"].name == "table_lat"
+
+
+def test_index():
+    """Test when time is in index."""
+    df = pd.DataFrame(index=["m_time"])
+    df.index.rename("m_time", inplace=True)
+    assert df.cf["T"].name == "m_time"
+
+
+def test_cols():
+    df = pd.DataFrame(columns=["m_time", "lon", "lat", "temp"])
+    assert df.cf.axes_cols == ["m_time"]
+    assert sorted(df.cf.coordinates_cols) == ["lat", "lon", "m_time"]

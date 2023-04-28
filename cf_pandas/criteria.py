@@ -103,15 +103,22 @@ for coord, attrs in coordinate_criteria.items():
 coordinate_criteria["X"]["long_name"] += ("cell index along first dimension",)
 coordinate_criteria["Y"]["long_name"] += ("cell index along second dimension",)
 
+# changes allow for the pattern string to not be at the start of the comparison string
+# like (?=.*lon)
 guess_regex = {
-    "time": re.compile("\\bt\\b|(time|min|hour|day|week|month|year)[0-9]*"),
+    "time": re.compile("\\bt\\b|(?=.*time|min|hour|day|week|month|year)[0-9]*"),
+    # "time": re.compile("\\bt\\b|(time|min|hour|day|week|month|year)[0-9]*"),
     "Z": re.compile(
-        "(z|nav_lev|gdep|lv_|[o]*lev|bottom_top|sigma|h(ei)?ght|altitude|depth|"
+        "(z|nav_lev|gdep|lv_|[o]*lev|bottom_top|sigma|(?=.*dbars)|h(ei)?ght|altitude|depth|"
         "isobaric|pres|isotherm)[a-z_]*[0-9]*"
     ),
+    # "Z": re.compile(
+    #     "(z|nav_lev|gdep|lv_|[o]*lev|bottom_top|sigma|h(ei)?ght|altitude|depth|"
+    #     "isobaric|pres|isotherm)[a-z_]*[0-9]*"
+    # ),
     "Y": re.compile("y|j|nlat|nj"),
-    "latitude": re.compile("y?(nav_lat|lat|gphi)[a-z0-9]*"),
+    "latitude": re.compile("y?(nav_lat|(?=.*lat)|gphi)[a-z0-9]*"),
     "X": re.compile("x|i|nlon|ni"),
-    "longitude": re.compile("x?(nav_lon|lon|glam)[a-z0-9]*"),
+    "longitude": re.compile("x?(nav_lon|(?=.*lon)|glam)[a-z0-9]*"),
 }
 guess_regex["T"] = guess_regex["time"]
