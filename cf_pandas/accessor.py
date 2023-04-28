@@ -114,7 +114,7 @@ class CFAccessor:
         # return series for column
         if len(col_names) == 1 and col_names[0] in self._obj.columns:
             return self._obj[col_names[0]]
-        # return index 
+        # return index
         elif len(col_names) == 1 and col_names[0] in self._obj.index.names:
             return self._obj.index.get_level_values(col_names[0])
         # return DataFrame
@@ -251,7 +251,7 @@ class CFAccessor:
         }
 
         return vardict
-    
+
     @property
     def axes_cols(self) -> List[str]:
         """
@@ -262,9 +262,9 @@ class CFAccessor:
         list
             Variable names that are the column names which represent axes.
         """
-        
+
         return list(itertools.chain(*[*self.axes.values()]))
-    
+
     @property
     def coordinates_cols(self) -> List[str]:
         """
@@ -275,7 +275,7 @@ class CFAccessor:
         list
             Variable names that are the column names which represent coordinates.
         """
-        
+
         return list(itertools.chain(*[*self.coordinates.values()]))
 
     @property
