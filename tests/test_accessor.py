@@ -139,3 +139,9 @@ def test_index():
     df = pd.DataFrame(index=["m_time"])
     df.index.rename("m_time", inplace=True)
     assert df.cf["T"].name == "m_time"
+
+
+def test_cols():
+    df = pd.DataFrame(columns=["m_time", "lon", "lat", "temp"])
+    assert df.cf.axes_cols == ["m_time"]
+    assert sorted(df.cf.coordinates_cols) == ["lat", "lon", "m_time"]
