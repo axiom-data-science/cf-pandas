@@ -58,7 +58,8 @@ class CFAccessor:
     """Dataframe accessor analogous to cf-xarray accessor."""
 
     def __init__(self, pandas_obj):
-        self._validate(pandas_obj)
+        # don't automatically validate but can when needed
+        # self._validate(pandas_obj)
         self._obj = pandas_obj
 
     @staticmethod
@@ -110,9 +111,12 @@ class CFAccessor:
         else:
             col_names = _get_custom_criteria(self._obj, key)
 
-        # return series
-        if len(col_names) == 1:
+        # return series for column
+        if len(col_names) == 1 and col_names[0] in self._obj.columns:
             return self._obj[col_names[0]]
+        # return index 
+        elif len(col_names) == 1 and col_names[0] in self._obj.index.names:
+            return self._obj.index.get_level_values(col_names[0])
         # return DataFrame
         elif len(col_names) > 1:
             return self._obj[col_names]
@@ -247,6 +251,32 @@ class CFAccessor:
         }
 
         return vardict
+    
+    @property
+    def axes_cols(self) -> List[str]:
+        """
+        Property that returns a list of column names from the axes mapping.
+
+        Returns
+        -------
+        list
+            Variable names that are the column names which represent axes.
+        """
+        
+        return list(itertools.chain(*[*self.axes.values()]))
+    
+    @property
+    def coordinates_cols(self) -> List[str]:
+        """
+        Property that returns a list of column names from the coordinates mapping.
+
+        Returns
+        -------
+        list
+            Variable names that are the column names which represent coordinates.
+        """
+        
+        return list(itertools.chain(*[*self.coordinates.values()]))
 
     @property
     def standard_names(self):
@@ -313,26 +343,14 @@ def _get_axis_coord(obj: Union[DataFrame, Series], key: str) -> list:
             f"cf_xarray did not understand key {key!r}. Expected one of {valid_keys!r}"
         )
 
-    # search_in = set()
-    # attrs_or_encoding = ChainMap(obj.attrs, obj.encoding)
-    # coordinates = attrs_or_encoding.get("coordinates", None)
-
-    # # Handles case where the coordinates attribute is None
-    # # This is used to tell xarray to not write a coordinates attribute
-    # if coordinates:
-    #     search_in.update(coordinates.split(" "))
-    # if not search_in:
-    #     search_in = set(obj.coords)
-
-    # # maybe only do this for key in _AXIS_NAMES?
-    # search_in.update(obj.indexes)
-
-    # search_in = search_in & set(obj.coords)
+    # loop over column names and index names
     results: set = set()
-    for col in obj.columns:
-        # var = obj.coords[coord]
+    cols_and_indices = list(obj.columns)
+    cols_and_indices += obj.index.names
+    # remove None if in names from index
+    cols_and_indices = [name for name in cols_and_indices if name is not None]
+    for col in cols_and_indices:
         if key in coordinate_criteria:
-            # import pdb; pdb.set_trace()
             for criterion, expected in coordinate_criteria[key].items():
                 # allow for the column header having a space in it that separate
                 # the name from the units, for example
