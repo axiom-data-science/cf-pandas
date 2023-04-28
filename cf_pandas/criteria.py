@@ -118,9 +118,7 @@ guess_regex = {
     # ),
     "Y": re.compile("y|j|nlat|nj"),
     "latitude": re.compile("y?(nav_lat|(?=.*lat)|gphi)[a-z0-9]*"),
-    # "latitude": re.compile("(?i)y?(?=.*lat)[a-z0-9]*"),
     "X": re.compile("x|i|nlon|ni"),
-    # "longitude": re.compile("(?i)x?(?=.*lon)[a-z0-9]*"),
     "longitude": re.compile("x?(nav_lon|(?=.*lon)|glam)[a-z0-9]*"),
 }
 guess_regex["T"] = guess_regex["time"]
