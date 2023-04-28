@@ -33,7 +33,7 @@ def test_validate():
         ]
     )
     with pytest.raises(AttributeError):
-        df.cf.keys()
+        df.cf._validate()
 
 
 def test_match_criteria_key_accessor():

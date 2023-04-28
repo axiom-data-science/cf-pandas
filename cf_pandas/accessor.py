@@ -62,14 +62,14 @@ class CFAccessor:
         # self._validate(pandas_obj)
         self._obj = pandas_obj
 
-    @staticmethod
-    def _validate(obj):
+    # @staticmethod
+    def _validate(self):
         """what is necessary for basic use."""
 
         # verify that necessary keys are present. Z would also be nice but might be missing.
         # but don't use the accessor to check
         keys = ["T", "longitude", "latitude"]
-        missing_keys = [key for key in keys if len(_get_axis_coord(obj, key)) == 0]
+        missing_keys = [key for key in keys if len(_get_axis_coord(self._obj, key)) == 0]
         if len(missing_keys) > 0:
             raise AttributeError(
                 f'{"longitude", "latitude", "time"} must be identifiable in DataFrame but {missing_keys} are missing.'
