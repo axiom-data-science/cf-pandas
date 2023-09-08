@@ -149,6 +149,23 @@ class CFAccessor:
             # make new column
             self._obj[key] = values
             # return self._obj[key]
+        elif isinstance(col, pd.Index):
+            # which of possible multi index it is
+            # does single and multi index need to be separated?
+            # ilev = self._obj.index.names.index(col.name)
+            # self._obj.index = self._obj.index.set_levels(values, level=ilev)
+
+            # loop over levels in index so we know which level to replace
+            inds = []
+            for lev in range(self._obj.index.nlevels):
+                ind = self._obj.index.get_level_values(lev)
+                if self._obj.index.names[lev] == col.name:
+                    save_type = type(col)
+                    ind = save_type(values)
+                    ind.name = col.name
+                inds.append(ind)
+            self._obj = self._obj.set_index(inds)
+
         else:
             raise ValueError("Setting item only works if key matches one column only.")
 
