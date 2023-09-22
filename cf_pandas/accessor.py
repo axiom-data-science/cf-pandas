@@ -107,7 +107,11 @@ class CFAccessor:
 
         # if key is a coordinate or axes, use a different method to match
         valid_keys = _COORD_NAMES + _AXIS_NAMES
-        if key in valid_keys:
+        # return the key if it is already a name in the object and doesn't need to be interpreted
+        if key in self._obj.keys():
+            col_names = [key]
+
+        elif key in valid_keys:
             col_names = _get_axis_coord(self._obj, key)
 
         else:
